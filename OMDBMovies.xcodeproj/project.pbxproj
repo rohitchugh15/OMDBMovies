@@ -27,6 +27,7 @@
 		78BED9362E4F4B190075A319 /* OMDBMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OMDBMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78BED9432E4F4B1A0075A319 /* OMDBMoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OMDBMoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		78BED94D2E4F4B1B0075A319 /* OMDBMoviesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OMDBMoviesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		78E0AD8A2E645BFE00165927 /* OMDBMovies.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = OMDBMovies.xctestplan; path = OMDBMoviesTests/OMDBMovies.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +76,7 @@
 		78BED92D2E4F4B190075A319 = {
 			isa = PBXGroup;
 			children = (
+				78E0AD8A2E645BFE00165927 /* OMDBMovies.xctestplan */,
 				78BED9382E4F4B190075A319 /* OMDBMovies */,
 				78BED9462E4F4B1A0075A319 /* OMDBMoviesTests */,
 				78BED9502E4F4B1B0075A319 /* OMDBMoviesUITests */,

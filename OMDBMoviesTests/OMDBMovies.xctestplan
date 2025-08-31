@@ -1,0 +1,43 @@
+{
+  "configurations" : [
+    {
+      "id" : "58E073FA-5EA9-42AA-BC48-612491A3BBA1",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:OMDBMovies.xcodeproj",
+      "identifier" : "78BED9352E4F4B190075A319",
+      "name" : "OMDBMovies"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "skippedTests" : [
+        "OMDBMoviesTests",
+        "OMDBMoviesTests\/testExample()",
+        "OMDBMoviesTests\/testPerformanceExample()"
+      ],
+      "target" : {
+        "containerPath" : "container:OMDBMovies.xcodeproj",
+        "identifier" : "78BED9422E4F4B1A0075A319",
+        "name" : "OMDBMoviesTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:OMDBMovies.xcodeproj",
+        "identifier" : "78BED94C2E4F4B1B0075A319",
+        "name" : "OMDBMoviesUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
