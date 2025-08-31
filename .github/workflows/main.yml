@@ -19,5 +19,5 @@ jobs:
           xcodebuild test \
             -project OMDBMovies.xcodeproj \
             -scheme OMDBMovies \
-            -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.5' \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.6' \
             CODE_SIGNING_ALLOWED=NO
