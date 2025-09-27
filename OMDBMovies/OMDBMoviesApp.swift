@@ -11,7 +11,7 @@ import SwiftUI
 struct OMDBMoviesApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: MovieSearchViewModel(movieService: MovieService()))
+            MovieListView(viewModel: MovieListViewModel(movieRepository: RemoteMoviesRepository()))
         }
     }
 }

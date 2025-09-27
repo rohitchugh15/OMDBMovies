@@ -1,5 +1,5 @@
 //
-//  MovieSearchViewModel.swift
+//  MovieListViewModel.swift
 //  OMDBMovies
 //
 //  Created by Priyanka Kaushal on 16/08/25.
@@ -8,20 +8,27 @@
 import Foundation
 import Combine
 
-class MovieSearchViewModel: ObservableObject {
+enum MovieSearchViewModelState {
+    case empty
+    case loading
+    case loaded
+    case error(String)
+}
+
+class MovieListViewModel: ObservableObject {
     
-    @Published private(set) var movies: [Movies] = []
+    @Published private(set) var state: MovieSearchViewModelState = .empty
     
-    @Published private(set) var loadingComleted: Bool = false
+    @Published private(set) var movies: [MovieListItem] = []
     
     private(set) var searchSubject = CurrentValueSubject<String, Never>("")
     
-    private let movieService: MovieServiceProtocol
+    private let movieRepository: MoviesRepositoryProtocol
     
     private var subCancellables: Set<AnyCancellable> = []
     
-    init(movieService: MovieServiceProtocol) {
-        self.movieService = movieService
+    init(movieRepository: MoviesRepositoryProtocol) {
+        self.movieRepository = movieRepository
         self.setupSearchPub()
     }
     
@@ -38,25 +45,33 @@ class MovieSearchViewModel: ObservableObject {
     }
     
     private func fetchMovies(searchQuery: String) {
-        self.loadingComleted = false
+        if searchQuery.isEmpty {
+            self.state = .empty
+            self.movies = []
+            return
+        }
         
-        self.movieService.fetchMovies(searchQuery: searchQuery)
+        self.state = .loading
+        
+        self.movieRepository.fetchMovies(searchQuery: searchQuery)
             .sink { [weak self] completion in
                 switch completion {
                 case .finished:
-                    self?.loadingComleted = true
+                    print("Fetch movies finished")
                 case .failure(let error):
-                    self?.movies = []
+                    self?.movies.removeAll()
+                    self?.state = .error(error.localizedDescription)
                     print(error)
                 }
-            } receiveValue: { [weak self] movieSearch in
-                self?.movies = movieSearch.search
+            } receiveValue: { [weak self] fetchedMovies in
+                self?.state = .loaded
+                self?.movies = fetchedMovies
             }.store(in: &subCancellables)
     }
 }
 
 #if DEBUG
-extension MovieSearchViewModel {
+extension MovieListViewModel {
     
     func testable_fetchMovies(searchQuery: String) {
         self.fetchMovies(searchQuery: searchQuery)

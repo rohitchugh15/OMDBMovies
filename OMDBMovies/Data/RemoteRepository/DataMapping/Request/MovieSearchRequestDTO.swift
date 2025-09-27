@@ -1,5 +1,5 @@
 //
-//  MovieSearchRequest.swift
+//  MovieSearchRequestDTO.swift
 //  OMDBMovies
 //
 //  Created by Priyanka Kaushal on 16/08/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieSearchRequest: Encodable {
+struct MovieSearchRequestDTO: Encodable {
     var searchQuery: String
     private let apiKey: String = "6cd9bade"
     

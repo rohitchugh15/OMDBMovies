@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class MockMovieService: MovieServiceProtocol {
+class MockMoviesRepository: MoviesRepositoryProtocol {
     
     private(set) var returnMovies: Bool
     
@@ -16,7 +16,7 @@ class MockMovieService: MovieServiceProtocol {
         self.returnMovies = returnMovies
     }
     
-    func fetchMovies(searchQuery: String) -> AnyPublisher<MovieSearch, NetworkError> {
+    func fetchMovies(searchQuery: String) -> AnyPublisher<[MovieListItem], NetworkError> {
         if !returnMovies {
             return Fail(error: NetworkError.invalidResponse)
                 .eraseToAnyPublisher()
@@ -29,7 +29,7 @@ class MockMovieService: MovieServiceProtocol {
         
         do {
             let decoder = JSONDecoder()
-            let movies = try decoder.decode(MovieSearch.self, from: jsonData)
+            let movies = try decoder.decode(MovieSearchDTO.self, from: jsonData).search.map({$0.toDomain()})
             return Just(movies)
                 .setFailureType(to: NetworkError.self)
                 .eraseToAnyPublisher()

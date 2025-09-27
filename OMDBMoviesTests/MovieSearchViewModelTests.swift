@@ -23,7 +23,7 @@ final class MovieSearchViewModelTests: XCTestCase {
 
     func testFetchMovies_Success() {
         // Arrange
-        let vm = MovieSearchViewModel(movieService: MockMovieService())
+        let vm = MovieListViewModel(movieService: MockMovieService())
         
         let expectation = XCTestExpectation(description: "Movies updated")
         
@@ -45,7 +45,7 @@ final class MovieSearchViewModelTests: XCTestCase {
     
     func testFetchMovies_Failure() {
         // Arrange
-        let vm = MovieSearchViewModel(movieService: MockMovieService(returnMovies: false))
+        let vm = MovieListViewModel(movieService: MockMovieService(returnMovies: false))
         
         let expectation = XCTestExpectation(description: "Movies updated")
         
@@ -66,7 +66,7 @@ final class MovieSearchViewModelTests: XCTestCase {
     
     func testFindMovies() {
         // Arrange
-        let vm = MovieSearchViewModel(movieService: MockMovieService())
+        let vm = MovieListViewModel(movieService: MockMovieService())
         
         let expectation = XCTestExpectation(description: "Movies updated")
         

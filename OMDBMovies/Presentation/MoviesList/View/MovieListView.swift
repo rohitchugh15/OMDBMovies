@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MovieListView: View {
     
-    @StateObject var viewModel: MovieSearchViewModel
+    @StateObject var viewModel: MovieListViewModel
     
     @State private var searchQuery: String = ""
-        
+    
     var body: some View {
         NavigationStack {
             List(viewModel.movies) { movie in
@@ -23,11 +23,13 @@ struct ContentView: View {
                             Image(systemName: "photo")
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 75, height: 75)
+                                .frame(width: 80, height: 80)
+                                .cornerRadius(40)
                         case .success(let image):
                             image.resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 75, height: 75)
+                                .frame(width: 80, height: 80)
+                                .cornerRadius(40)
                         default:
                             ProgressView()
                         }
@@ -37,8 +39,17 @@ struct ContentView: View {
             }
             .listStyle(.plain)
             .overlay(content: {
-                if viewModel.movies.isEmpty {
-                    Text("No movies found")
+                switch viewModel.state {
+                case .loading:
+                    ProgressView("Loading...")
+                case .error(let errorMessage):
+                    Text(errorMessage)
+                case .empty:
+                    Text("Please search by movie names")
+                case .loaded:
+                    if viewModel.movies.isEmpty {
+                        Text("No movies found")
+                    }
                 }
             })
             .searchable(text: $searchQuery)
@@ -50,5 +61,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(viewModel: MovieSearchViewModel(movieService: MockMovieService()))
+    MovieListView(viewModel: MovieListViewModel(movieRepository: MockMoviesRepository()))
 }
