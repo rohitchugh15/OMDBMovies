@@ -21,6 +21,8 @@ class MovieListViewModel: ObservableObject {
     
     @Published private(set) var movies: [MovieListItem] = []
     
+    private var topRatedMovies: [MovieListItem] = []
+    
     private(set) var searchSubject = CurrentValueSubject<String, Never>("")
     
     private let movieRepository: MoviesRepositoryProtocol
@@ -46,8 +48,7 @@ class MovieListViewModel: ObservableObject {
     
     private func fetchMovies(searchQuery: String) {
         if searchQuery.isEmpty {
-            self.state = .empty
-            self.movies = []
+            self.loadTopRatedMovies()
             return
         }
         
@@ -67,6 +68,23 @@ class MovieListViewModel: ObservableObject {
                 self?.state = .loaded
                 self?.movies = fetchedMovies
             }.store(in: &subCancellables)
+    }
+    
+    func loadTopRatedMovies() {
+        if self.topRatedMovies.isEmpty {
+            self.state = .loading
+            Task {
+                let fetchedMovies = try? await self.movieRepository.fetchTopRatedMovies()
+                self.topRatedMovies = fetchedMovies ?? []
+                await MainActor.run {
+                    self.state = .loaded
+                    self.movies = self.topRatedMovies
+                }
+            }
+        } else {
+            self.state = .loaded
+            self.movies = self.topRatedMovies
+        }
     }
 }
 

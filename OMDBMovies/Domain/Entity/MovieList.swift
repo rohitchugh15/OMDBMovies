@@ -9,11 +9,25 @@ import Foundation
 
 struct MovieListItem: Identifiable {
     
-    var id:String {
-        imdbID
+    var id:Int {
+        tmdId
     }
     
-    var imdbID: String
-    var title: String
-    var poster: URL?
+    let tmdId: Int
+    let title: String
+    var posterPath: String?
+    
+    var posterImgURl: URL? {
+        if let posterPath, !posterPath.isEmpty {
+            return URL(string: "\(URLConstants.imgURLTmdb1280)\(posterPath)")!
+        } else {
+            return nil
+        }
+    }
+}
+
+extension MovieDTO {
+    func toDomain() -> MovieListItem {
+        return MovieListItem(tmdId: self.tmdId ?? 0, title: self.title ?? "", posterPath: self.posterPath)
+    }
 }

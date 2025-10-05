@@ -36,7 +36,11 @@ extension URLRequestBuilder {
     }
     
     var headers: [String : String]? {
-        return nil
+        return [
+            "accept" : "application/json",
+            "content-type" : "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiZTVhNmFkMTg3YzIxOGUxYWQ5YTc3YTNiNTU4MjRkOCIsIm5iZiI6MTc1ODk5ODcyNS40NzIsInN1YiI6IjY4ZDgzMGM1Njg2YmNhMzc3ZjJkZTEwYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.kXwsLllnNfvwmFxGrkYgqocoBe7M_FC4yLSD0ZVpwLM"
+        ]
     }
     
     func urlRequest() -> URLRequest {

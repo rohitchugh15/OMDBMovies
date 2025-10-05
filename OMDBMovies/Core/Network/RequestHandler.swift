@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class RequestHandler {
+struct RequestHandler {
     
     func sendRequest<T:Decodable>(urlRequest: URLRequest, responseType: T.Type) -> AnyPublisher<T, NetworkError> {
         do {
