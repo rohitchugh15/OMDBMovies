@@ -10,7 +10,7 @@ import Foundation
 enum MoviesRequestBuilder {
     case topRated
     case search(Encodable)
-    case details(String, Encodable)
+    case details(String)
 }
 
 extension MoviesRequestBuilder: URLRequestBuilder {
@@ -19,7 +19,7 @@ extension MoviesRequestBuilder: URLRequestBuilder {
         switch self {
         case .search(_):
             return .GET
-        case .details(_, _):
+        case .details(_):
             return .GET
         case .topRated:
             return .GET
@@ -30,7 +30,7 @@ extension MoviesRequestBuilder: URLRequestBuilder {
         switch self {
         case .search(_):
             return nil
-        case .details(_, _):
+        case .details(_):
             return nil
         case .topRated:
             return nil
@@ -40,9 +40,9 @@ extension MoviesRequestBuilder: URLRequestBuilder {
     var endPoint:String {
         switch self {
         case .search(let searchQuery):
-            return "search/movie".appending(searchQuery.getURLQuery())
-        case .details(let movieId, let searchQuery):
-            return "movie/\(movieId)?".appending(searchQuery.getURLQuery())
+            return "search/movie?".appending(searchQuery.getURLQuery())
+        case .details(let movieId):
+            return "movie/\(movieId)"
         case .topRated:
             return "movie/top_rated"
         }

@@ -33,9 +33,7 @@ class RemoteMoviesRepository: MoviesRepositoryProtocol {
     }
     
     func fetchMovieDetail(_ movieId: String) async throws -> MovieDetails {
-        let movieDetailRequest = MovieDetailRequestDTO()
-        
-        let movieDetailURLRequest = MoviesRequestBuilder.details(movieId, movieDetailRequest).urlRequest()
+        let movieDetailURLRequest = MoviesRequestBuilder.details(movieId).urlRequest()
         
         do {
             return try await RequestHandlerAsync().sendRequest(movieDetailURLRequest, as: MovieDetailDTO.self).toDomain()
